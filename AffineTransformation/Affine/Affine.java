@@ -181,39 +181,7 @@ public class Affine{
                     int R2, G2, B2;
                     int R3, G3, B3;
                     int Head = 0xFF;
-                    if ((oldX2 == oldX1) && (oldX2 < curWidth) && (oldX1 >= 0) && (oldY2 < curHeight) && (oldY1 >= 0)) {
-                        
-                        B0 = ((int)(Old[oldY1][oldX1])) & 0x000000FF;
-                        B2 = ((int)(Old[oldY2][oldX1])) & 0x000000FF;
-                        
-                        G0 = (((int)(Old[oldY1][oldX1])) >> 8) & 0x000000FF;
-                        G2 = (((int)(Old[oldY2][oldX1])) >> 8) & 0x000000FF;
-                        
-                        R0 = (((int)(Old[oldY1][oldX1])) >> 16) & 0x000000FF;
-                        R2 = (((int)(Old[oldY2][oldX1])) >> 16) & 0x000000FF;
-                        
-                        B =  (int)(B0*((double)oldY2 - y) + B2*(y - (double)oldY1)) & 0x000000FF;
-                        G =  (int)(G0*((double)oldY2 - y) + G2*(y - (double)oldY1)) & 0x000000FF;
-                        R =  (int)(R0*((double)oldY2 - y) + R2*(y - (double)oldY1)) & 0x000000FF;
-                        
-                        New[i][j] = ((Head<<24) + (R<<16) + (G<<8) + B);
-                    } else if ((oldY1 == oldY2) && (oldX2 < curWidth) && (oldX1 >= 0) && (oldY2 < curHeight) && (oldY1 >= 0)) {
-                        
-                        B0 = ((int)(Old[oldY1][oldX1])) & 0x000000FF;
-                        B1 = ((int)(Old[oldY1][oldX2])) & 0x000000FF;
-                        
-                        G0 = (((int)(Old[oldY1][oldX1])) >> 8) & 0x000000FF;
-                        G1 = (((int)(Old[oldY1][oldX1])) >> 8) & 0x000000FF;
-                        
-                        R0 = (((int)(Old[oldY1][oldX1])) >> 16) & 0x000000FF;
-                        R1 = (((int)(Old[oldY1][oldX2])) >> 16) & 0x000000FF;
-                        
-                        B =  (int)(B0*((double)oldX2 - x) + B1*(x - (double)oldX1)) & 0x000000FF;
-                        G =  (int)(G0*((double)oldX2 - x) + G1*(x - (double)oldX1)) & 0x000000FF;
-                        R =  (int)(R0*((double)oldX2 - x) + R1*(x - (double)oldX1)) & 0x000000FF;
-                        
-                        New[i][j] = ((Head<<24) + (R<<16) + (G<<8) + B);
-                    } else if((oldX2 < curWidth) && (oldX1 >= 0) && (oldY2 < curHeight) && (oldY1 >= 0)) {
+                    if ((oldX2 < curWidth) && (oldX1 >= 0) && (oldY2 < curHeight) && (oldY1 >= 0)) {
                         
                         B0 = ((int)(Old[oldY1][oldX1])) & 0x000000FF;
                         B1 = ((int)(Old[oldY1][oldX2])) & 0x000000FF;
@@ -230,20 +198,37 @@ public class Affine{
                         R2 = (((int)(Old[oldY2][oldX1])) >> 16) & 0x000000FF;
                         R3 = (((int)(Old[oldY2][oldX2])) >> 16) & 0x000000FF;
                         
-                        B =  (int)((B0*((double)oldX2 - x)*((double)oldY2 - y) +
-                                    B1*(x - (double)oldX1)*((double)oldY2 - y) +
-                                    B2*((double)oldX2 - x)*(y - (double)oldY1) +
-                                    B3*(x - (double)oldX1)*(y - (double)oldY1))) & 0x000000FF;
-                        G =  (int)((G0*((double)oldX2 - x)*((double)oldY2 - y) +
-                                    G1*(x - (double)oldX1)*((double)oldY2 - y) +
-                                    G2*((double)oldX2 - x)*(y - (double)oldY1) +
-                                    G3*(x - (double)oldX1)*(y - (double)oldY1))) & 0x000000FF;
-                        R =  (int)((R0*((double)oldX2 - x)*((double)oldY2 - y) +
-                                    R1*(x - (double)oldX1)*((double)oldY2 - y) +
-                                    R2*((double)oldX2 - x)*(y - (double)oldY1) +
-                                    R3*(x - (double)oldX1)*(y - (double)oldY1))) & 0x000000FF;
-                       
-                        New[i][j] = ((Head<<24) + (R<<16) + (G<<8) + B);
+                        if (oldX2 == oldX1) {
+                            
+                            B =  (int)(B0*((double)oldY2 - y) + B2*(y - (double)oldY1)) & 0x000000FF;
+                            G =  (int)(G0*((double)oldY2 - y) + G2*(y - (double)oldY1)) & 0x000000FF;
+                            R =  (int)(R0*((double)oldY2 - y) + R2*(y - (double)oldY1)) & 0x000000FF;
+                            
+                            New[i][j] = ((Head<<24) + (R<<16) + (G<<8) + B);
+                        } else if (oldY1 == oldY2) {
+  
+                            B =  (int)(B0*((double)oldX2 - x) + B1*(x - (double)oldX1)) & 0x000000FF;
+                            G =  (int)(G0*((double)oldX2 - x) + G1*(x - (double)oldX1)) & 0x000000FF;
+                            R =  (int)(R0*((double)oldX2 - x) + R1*(x - (double)oldX1)) & 0x000000FF;
+                            
+                            New[i][j] = ((Head<<24) + (R<<16) + (G<<8) + B);
+                        } else {
+ 
+                            B =  (int)((B0*((double)oldX2 - x)*((double)oldY2 - y) +
+                                        B1*(x - (double)oldX1)*((double)oldY2 - y) +
+                                        B2*((double)oldX2 - x)*(y - (double)oldY1) +
+                                        B3*(x - (double)oldX1)*(y - (double)oldY1))) & 0x000000FF;
+                            G =  (int)((G0*((double)oldX2 - x)*((double)oldY2 - y) +
+                                        G1*(x - (double)oldX1)*((double)oldY2 - y) +
+                                        G2*((double)oldX2 - x)*(y - (double)oldY1) +
+                                        G3*(x - (double)oldX1)*(y - (double)oldY1))) & 0x000000FF;
+                            R =  (int)((R0*((double)oldX2 - x)*((double)oldY2 - y) +
+                                        R1*(x - (double)oldX1)*((double)oldY2 - y) +
+                                        R2*((double)oldX2 - x)*(y - (double)oldY1) +
+                                        R3*(x - (double)oldX1)*(y - (double)oldY1))) & 0x000000FF;
+                           
+                            New[i][j] = ((Head<<24) + (R<<16) + (G<<8) + B);
+                        }
                     }
                 }
                
