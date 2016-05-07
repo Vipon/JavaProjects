@@ -91,27 +91,7 @@ public class Affine{
         y = p[1];
         if(Math.abs(y) > maxY) maxY = Math.abs(y);
         if(Math.abs(x) > maxX) maxX = Math.abs(x);
-        //left-down
-        Point[0][0] = -curWidth/2;
-        Point[1][0] = -curHeight/2;
-        oldPoint.setDarray(Point);
-        newPoint = rotateMatrix.mul(oldPoint);
-        p = newPoint.getArray();
-        x = p[0];
-        y = p[1];
-        if(Math.abs(y) > maxY) maxY = Math.abs(y);
-        if(Math.abs(x) > maxX) maxX = Math.abs(x);
-        //right-down
-        Point[0][0] = curWidth/2 - 1;
-        Point[1][0] = -curHeight/2;
-        oldPoint.setDarray(Point);
-        newPoint = rotateMatrix.mul(oldPoint);
-        p = newPoint.getArray();
-        x = p[0];
-        y = p[1];
-        if(Math.abs(y) > maxY) maxY = Math.abs(y);
-        if(Math.abs(x) > maxX) maxX = Math.abs(x);
-        
+                
         newWidth = 1 + (int) Math.ceil(2*maxX);
         newHeight = 1 + (int) Math.ceil(2*maxY);
         newWidth *= koeff;
@@ -173,8 +153,6 @@ public class Affine{
                     oldX2 = (int)Math.ceil((p[0] + (double)curWidth/2));
                     oldY2 = (int)Math.ceil((p[1] + (double)curHeight/2));
                     
-                   /*System.out.println(oldX1);
-                    System.out.println(oldX2);*/
                     int R, G, B;
                     int R0, G0, B0;
                     int R1, G1, B1;
@@ -198,6 +176,10 @@ public class Affine{
                         R2 = (((int)(Old[oldY2][oldX1])) >> 16) & 0x000000FF;
                         R3 = (((int)(Old[oldY2][oldX2])) >> 16) & 0x000000FF;
                         
+                        if ((oldX2 == oldX1) && (oldY1 == oldY2)) {
+                            
+                            New[i][j] = ((Head<<24) + (R1<<16) + (G1<<8) + B1);
+                        }
                         if (oldX2 == oldX1) {
                             
                             B =  (int)(B0*((double)oldY2 - y) + B2*(y - (double)oldY1)) & 0x000000FF;

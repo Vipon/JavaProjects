@@ -114,7 +114,7 @@ public class AffineFrame extends JFrame{
             double A = Double.parseDouble(An);
             String exp = expansion.getText();
             double E = Double.parseDouble(exp);
-            Affine af = new Affine(A,E,Affine.Mode.NEAREST_NEIGHBOR);
+            Affine af = new Affine(A,E,Affine.Mode.ARITHMETIC_AVERAGE);
             dest = af.transform(source);
             imageComponent.repaint();
             AffineFrame.this.setVisible(true);
