@@ -1,6 +1,11 @@
+It's my realization of Affine transformation of pictures with come interpolation methods.
+Currently NearestNeigdor method and Average of 4 Nearest point methods have been realized.
+
+If you know other interpolation methods, it will be interested for me.
+
 Files and folders descriptions:
-    AffineFrame.java - Frame for all progmar. In frame you could chose picture to push button 
-                       "Select Picture". Affine transformation will be applied after 
+    AffineFrame.java - Frame for all progmar. In frame you can chose picture to push button 
+                       "Select Picture" Affine transformation will be applied after 
                        press button "Transform".
     Matrix           - Package is to contain my Matrix class.
     Affine           - Package is to contain Affine transformations realization.
