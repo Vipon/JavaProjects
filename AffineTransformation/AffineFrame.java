@@ -141,8 +141,6 @@ public class AffineFrame extends JFrame{
                     
                     imageDest = pixelsToImage(dest);
                 }
-                
-                this.setSize(3*SourceWidth,3*SourceHeight);
             }
             
             super.repaint();
