@@ -4,15 +4,15 @@ public class Matrix {
     
     private int hight;
     private	int	length;
-    private int[][] matrix;
+    private double[][] matrix;
     
     public static Matrix randM(int hight, int length) {
     
-        int[][] rand = new int[hight][length];
+        double[][] rand = new double[hight][length];
         
         for (int i = 0; i < hight; i++)
             for (int j = 0; j < length; j++)
-                rand[i][j] = (int) (1000*Math.random());
+                rand[i][j] = 1000*Math.random();
         return new Matrix(rand);
     }
     
@@ -20,27 +20,37 @@ public class Matrix {
     
         this.hight = hight;
         this.length = length;
-        matrix = new int[hight][length];
+        matrix = new double[hight][length];
     }
     
-    public Matrix(int[][] data) {
+    public Matrix(double[][] data) {
     
         hight = data.length;
         length = data[0].length;
-        matrix = new int[hight][length];
+        matrix = new double[hight][length];
         
         for (int i = 0; i < hight; i++)
             for (int j = 0; j < length; j++)
                 matrix[i][j] = data[i][j];
     }
     
-    public int[] getArray() {
+    public double[] getArray() {
         
-        int[] result = new int[hight*length];
+        double[] result = new double[hight*length];
         for (int i = 0; i < hight; i++)
             for (int j = 0; j < length; j++)
                 result[i*length + j] = matrix[i][j];
         return result;
+    }
+    
+    public double[][] getDarray() {
+        
+        return matrix;
+    }
+    
+    public void setDarray(double[][] m) {
+        
+        matrix = m;
     }
     
     public int getHeight() {
@@ -107,7 +117,7 @@ public class Matrix {
     
         for (int i = 0; i < hight; i++) {
             for (int j = 0; j < length; j++)
-                System.out.printf("%9d ", matrix[i][j]);
+                System.out.printf("%9.4f ", matrix[i][j]);
             System.out.println();
         }
     }
